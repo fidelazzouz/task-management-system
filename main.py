@@ -1,16 +1,18 @@
 from app.models import Task, Project, User
 
-user = User("Ahmad", "ahmad@example.com")
-project = Project("Website", "Company portfolio website")
-task1 = Task("Design homepage", "Create main layout and UI", "High")
-task2 = Task("setup Database", "Configure postgreSQL tables", "Medium")
+task = Task("Build API", "Create login API", "high")
 
-project.add_task(task1)
-project.add_task(task2)
+print(task)
+print(repr(task))
 
-user.add_project(project)
+task.priority = "medium"
+task.status = "in_progress"
 
-task1.status = "in_progress"
-print("User:", user.username)
-user.display_projects()
-project.display_tasks()
+print(task)
+
+task.complete()
+print(task)
+
+print(Task.get_allowed_statuses())
+print(Task.get_allowed_priorities())
+print(Task.is_valid_priority("urgent"))
