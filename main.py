@@ -1,151 +1,72 @@
-
-from app.models import (
-    Task,
-    BugTask,
-    MeetingTask,
-    Project,
-    User
-)
+from app.models import Task, User, Project
 
 from app.services import (
-    InMemoryUserRepository,
-    SQLUserRepository,
-    MongoUserRepository,
+    TaskService,
+    ProjectService,
     RegistrationService,
     NotificationService,
     ProfileReportGenerator,
-    DeliveryCalculator,
-    NormalDelivery,
-    ExpressDelivery,
-    SameDayDelivery
 )
 
+from app.repositories import InMemoryUserRepository
 
-# =========================
-# 1. Create User
-# =========================
-
-user = User("Ahmad", "ahmad@example.com")
+# Create user
+user = User("fidel", "fidel@example.com")
 
 
-# =========================
-# 2. Create Project
-# =========================
-
-project = Project(
-    "Software Project",
-    "Task Management System"
-)
-
-
-# =========================
-# 3. Create Tasks
-# =========================
-
-task1 = Task(
-    "Create login",
-    "Build login functionality",
-    "high"
-)
-
-task2 = BugTask(
-    "Fix login bug",
-    "Login fails with invalid input",
-    "high",
-    "critical"
-)
-
-task3 = MeetingTask(
-    "Team meeting",
-    "Discuss project progress",
-    "medium",
-    "2026-11-26"
-)
-
-
-# =========================
-# 4. Add Tasks to Project
-# =========================
-
-project.add_task(task1)
-project.add_task(task2)
-project.add_task(task3)
-
-
-# =========================
-# 5. Add Project to User
-# =========================
+# Create project
+project = Project("Task Management", "My first software engineering project")
 
 user.add_project(project)
 
 
-# =========================
-# 6. Update Task Status
-# =========================
+# Create tasks
+task1 = Task("Learn Python", "Study modules and packages", "high")
 
-task1.status = "in_progress"
-task2.complete()
+task2 = Task("Learn SOLID", "Practice SOLID principles", "medium")
 
 
-# =========================
-# 7. Display Tasks
-# =========================
+# Task Service
+task_service = TaskService()
 
-print("\n--- Project Tasks ---")
-
-for task in project.tasks:
-    print(task)
+task_service.create_task(task1)
+task_service.create_task(task2)
 
 
-# =========================
-# 8. Test DIP and Dependency Injection
-# =========================
+# Project Service
+project_service = ProjectService()
 
-print("\n--- User Registration ---")
+project_service.create_project(project)
 
+project_service.add_task_to_project(project, task1)
+project_service.add_task_to_project(project, task2)
+
+
+# Update task
+task_service.update_task_status(task1, "in_progress")
+
+
+# User Registration
 repository = InMemoryUserRepository()
 
 registration_service = RegistrationService(repository)
+
 registration_service.register(user)
 
 
-# Try SQL Repository
+# Notification
+notification_service = NotificationService()
 
-sql_repository = SQLUserRepository()
-
-registration_service = RegistrationService(sql_repository)
-registration_service.register(user)
+notification_service.send_welcome_email(user)
 
 
-# Try Mongo Repository
-
-mongo_repository = MongoUserRepository()
-
-registration_service = RegistrationService(mongo_repository)
-registration_service.register(user)
-
-
-# =========================
-# 9. Test Other Services
-# =========================
-
-print("\n--- User Services ---")
-
-notification = NotificationService()
-notification.send_welcome_email(user)
-
+# Profile Report
 report = ProfileReportGenerator()
+
 report.generate_profile_report(user)
 
 
-# =========================
-# 10. Test OCP
-# =========================
+# Display tasks
+print("\nProject Tasks:")
 
-print("\n--- Delivery Calculator ---")
-
-calculator = DeliveryCalculator()
-
-print("Normal:", calculator.calculate(NormalDelivery()))
-print("Express:", calculator.calculate(ExpressDelivery()))
-print("Same Day:", calculator.calculate(SameDayDelivery()))
+project.display_tasks()

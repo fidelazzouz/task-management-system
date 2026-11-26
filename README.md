@@ -1,13 +1,26 @@
-echo "# task-management-system" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/fidelazzouz/task-management-system.git
-git push -u origin main
 
+# Task Management System
 
+A Python project built to practice Software Engineering,
+Object-Oriented Programming, and SOLID Principles.
 
-git remote add origin https://github.com/fidelazzouz/task-management-system.git
-git branch -M main
-git push -u origin main
+## Features
+
+- Create and manage tasks
+- Manage projects
+- Manage users
+- Update task status
+- User registration
+- Repository abstraction
+
+## Technologies
+
+- Python
+- Git
+- Object-Oriented Programming
+
+## Run
+
+```bash
+python3 main.py
+```
