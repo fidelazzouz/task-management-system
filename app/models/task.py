@@ -1,15 +1,18 @@
+class InvalidTaskStatusError(ValueError):
+    pass
+
+
 class Task:
 
     ALLOWED_STATUSES = ("todo", "in_progress", "done")
     ALLOWED_PRIORITIES = ("low", "medium", "high")
 
     def __init__(self, title, description, priority):
-
         if not title.strip():
             raise ValueError("Task title cannot be empty")
 
         if priority not in self.ALLOWED_PRIORITIES:
-            raise ValueError("Invalid priority")
+            raise ValueError("Invalid task priority")
 
         self.title = title
         self.description = description
@@ -17,9 +20,11 @@ class Task:
         self.status = "todo"
 
     def update_status(self, new_status):
-
         if new_status not in self.ALLOWED_STATUSES:
-            raise ValueError("Invalid status")
+            raise InvalidTaskStatusError(
+                f"Invalid status: '{new_status}'. "
+                f"Allowed statuses are: {self.ALLOWED_STATUSES}"
+            )
 
         self.status = new_status
 

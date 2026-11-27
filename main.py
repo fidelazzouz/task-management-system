@@ -1,3 +1,11 @@
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    filename="app.log",
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+)
+
 from app.models import Task, User, Project
 
 from app.services import (
