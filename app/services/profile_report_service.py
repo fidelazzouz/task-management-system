@@ -1,9 +1,15 @@
 class ProfileReportGenerator:
 
     def generate_profile_report(self, user):
+        if user is None:
+            raise ValueError("User cannot be None")
 
-        print("User Profile Report")
-        print("-------------------")
-        print("Username:", user.username)
-        print("Email:", user.email)
-        print("Projects:", len(user.projects))
+        report = (
+            "User Profile Report\n"
+            "-------------------\n"
+            f"Username: {user.username}\n"
+            f"Email: {user.email}\n"
+            f"Projects: {len(user.projects)}"
+        )
+
+        return report

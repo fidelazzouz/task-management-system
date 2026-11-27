@@ -10,7 +10,8 @@ class Project:
         self.tasks = []
 
     def add_task(self, task):
-        self.tasks.append(task)
+        if task not in self.tasks:
+            self.tasks.append(task)
 
     def remove_task(self, task):
         if task in self.tasks:
